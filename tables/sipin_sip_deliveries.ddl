@@ -8,7 +8,7 @@ BEGIN
     );
   END IF;
 END
-$$;
+$$ LANGUAGE plpgsql;
 
 CREATE TABLE IF NOT EXISTS sipin_sip_deliveries (
   correlation_id VARCHAR(32) PRIMARY KEY,
