@@ -10,7 +10,7 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
-CREATE TABLE IF NOT EXISTS sipin_sip_deliveries (
+CREATE TABLE IF NOT EXISTS public.sipin_sip_deliveries (
   correlation_id VARCHAR(32) PRIMARY KEY,
   s3_bucket VARCHAR(255) NOT NULL,
   s3_key TEXT NOT NULL,
