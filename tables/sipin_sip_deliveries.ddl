@@ -1,10 +1,16 @@
-CREATE TYPE sipin_sip_deliveries_status AS ENUM (
-  'in_progress',
-  'success',
-  'failure'
-);
+DO $$
+BEGIN
+  IF to_regtype('sipin_sip_deliveries_status') IS NULL THEN
+    CREATE TYPE sipin_sip_deliveries_status AS ENUM (
+      'in_progress',
+      'success',
+      'failure'
+    );
+  END IF;
+END
+$$;
 
-CREATE TABLE sipin_sip_deliveries (
+CREATE TABLE IF NOT EXISTS sipin_sip_deliveries (
   id SERIAL PRIMARY KEY,
   correlation_id VARCHAR(32) NOT NULL,
   s3_bucket VARCHAR(255) NOT NULL,
