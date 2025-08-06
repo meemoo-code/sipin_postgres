@@ -11,8 +11,7 @@ END
 $$;
 
 CREATE TABLE IF NOT EXISTS sipin_sip_deliveries (
-  id SERIAL PRIMARY KEY,
-  correlation_id VARCHAR(32) NOT NULL,
+  correlation_id VARCHAR(32) PRIMARY KEY,
   s3_bucket VARCHAR(255) NOT NULL,
   s3_key TEXT NOT NULL,
   pid VARCHAR(10) NULL, -- nullable
