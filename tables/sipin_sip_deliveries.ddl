@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS public.sipin_sip_deliveries (
   s3_bucket TEXT NOT NULL,
   s3_key TEXT NOT NULL,
   pid VARCHAR(10) NULL,
-  status sipin_sip_deliveries_status NOT NULL DEFAULT 'in_progress',
+  status public.sipin_sip_deliveries_status NOT NULL DEFAULT 'in_progress',
   failure_message TEXT NULL,
   last_event_type TEXT NOT NULL,
   last_event_occurred_at TIMESTAMP NOT NULL,
