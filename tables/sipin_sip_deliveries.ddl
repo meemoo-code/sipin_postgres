@@ -18,12 +18,5 @@ CREATE TABLE IF NOT EXISTS public.sipin_sip_deliveries (
   status public.sipin_sip_deliveries_status NOT NULL DEFAULT 'in_progress',
   failure_message TEXT NULL,
   last_event_type TEXT NOT NULL,
-  last_event_occurred_at TIMESTAMP NOT NULL,
-
-  CONSTRAINT check_failure_message
-    CHECK (
-      (status = 'failure' AND failure_message IS NOT NULL)
-      OR
-      (status <> 'failure' AND failure_message IS NULL)
-    )
+  last_event_occurred_at TIMESTAMP NOT NULL
 );
