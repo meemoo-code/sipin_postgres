@@ -1,7 +1,7 @@
 DO $$
 BEGIN
-  IF to_regtype('sipin_sip_deliveries_status') IS NULL THEN
-    CREATE TYPE sipin_sip_deliveries_status AS ENUM (
+  IF to_regtype('public.sipin_sip_deliveries_status') IS NULL THEN
+    CREATE TYPE public.sipin_sip_deliveries_status AS ENUM (
       'in_progress',
       'success',
       'failure'
