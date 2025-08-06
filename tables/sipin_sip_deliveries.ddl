@@ -11,7 +11,7 @@ END
 $$ LANGUAGE plpgsql;
 
 CREATE TABLE IF NOT EXISTS public.sipin_sip_deliveries (
-  correlation_id VARCHAR(32) PRIMARY KEY,
+  correlation_id VARCHAR(255) PRIMARY KEY,
   s3_bucket TEXT NOT NULL,
   s3_key TEXT NOT NULL,
   pid VARCHAR(10) NULL, -- nullable
@@ -25,8 +25,5 @@ CREATE TABLE IF NOT EXISTS public.sipin_sip_deliveries (
       (status = 'failure' AND failure_message IS NOT NULL)
       OR
       (status <> 'failure' AND failure_message IS NULL)
-    ),
-
-  CONSTRAINT check_correlation_id
-    CHECK (length(correlation_id) = 32 AND correlation_id ~ '^[0-9a-fA-F]{32}$')
+    )
 );
