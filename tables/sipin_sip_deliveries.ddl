@@ -19,4 +19,21 @@ CREATE TABLE IF NOT EXISTS public.sipin_sip_deliveries (
   failure_message TEXT NULL,
   last_event_type TEXT NOT NULL,
   last_event_occurred_at TIMESTAMP NOT NULL
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
 );
+
+CREATE OR REPLACE FUNCTION public.set_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW IS DISTINCT FROM OLD THEN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_updated_at
+BEFORE UPDATE ON public.sipin_sip_deliveries
+FOR EACH ROW
+EXECUTE FUNCTION public.set_updated_at_column();
