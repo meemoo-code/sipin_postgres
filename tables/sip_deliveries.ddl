@@ -1,7 +1,7 @@
 DO $$
 BEGIN
-  IF to_regtype('public.sipin_sip_deliveries_status') IS NULL THEN
-    CREATE TYPE public.sipin_sip_deliveries_status AS ENUM (
+  IF to_regtype('public.sip_deliveries_status') IS NULL THEN
+    CREATE TYPE public.sip_deliveries_status AS ENUM (
       'in_progress',
       'success',
       'failure'
@@ -10,12 +10,12 @@ BEGIN
 END
 $$ LANGUAGE plpgsql;
 
-CREATE TABLE IF NOT EXISTS public.sipin_sip_deliveries (
+CREATE TABLE IF NOT EXISTS public.sip_deliveries (
   correlation_id VARCHAR(255) PRIMARY KEY,
   s3_bucket TEXT NOT NULL,
   s3_key TEXT NOT NULL,
   pid VARCHAR(10) NULL,
-  status public.sipin_sip_deliveries_status NOT NULL DEFAULT 'in_progress',
+  status public.sip_deliveries_status NOT NULL DEFAULT 'in_progress',
   failure_message TEXT NULL,
   last_event_type TEXT NOT NULL,
   last_event_occurred_at TIMESTAMP NOT NULL
@@ -34,6 +34,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER set_updated_at
-BEFORE UPDATE ON public.sipin_sip_deliveries
+BEFORE UPDATE ON public.sip_deliveries
 FOR EACH ROW
 EXECUTE FUNCTION public.set_updated_at_column();
