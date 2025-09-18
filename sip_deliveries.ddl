@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS public.sip_deliveries (
   status public.sip_deliveries_status NOT NULL DEFAULT 'in_progress',
   failure_message TEXT NULL,
   last_event_type TEXT NOT NULL,
-  last_event_occurred_at TIMESTAMP NOT NULL
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
+  last_event_occurred_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 CREATE OR REPLACE FUNCTION public.set_updated_at_column()
