@@ -57,9 +57,11 @@ BEGIN
   s3_bucket := NEW.s3_bucket;
   pid := NEW.pid;
   outcome := NEW.status;
-  -- prefix the message with the event type
-  message := NEW.last_event_type || ' -- ' || NEW.failure_message;
   event_type := NEW.last_event_type;
+  -- normalize event types (if pulsar topics)
+  event_type := CASE WHEN starts_with(LOWER(event_type), 'persistent://public/') THEN 'meemoo.' || regexp_replace(event_type, '^persistent://public/([^/]+/)?', '', 'i') ELSE event_type END;
+  -- prefix the message with the event type
+  message := event_type || ' -- ' || NEW.failure_message;
   occurred := to_iso8601z(NEW.last_event_occurred_at);
   -- construct the payload
   payload := jsonb_build_object(
