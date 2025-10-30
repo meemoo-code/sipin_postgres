@@ -59,13 +59,13 @@ BEGIN
   outcome := NEW.status;
   event_type := NEW.last_event_type;
   -- normalize event types (if pulsar topics)
-  event_type := CASE WHEN starts_with(LOWER(event_type), 'persistent://public/') THEN 'meemoo.' || regexp_replace(event_type, '^persistent://public/([^/]+/)?', '', 'i') ELSE event_type END;
-  -- prefix the message with the event type
+  event_type := CASE WHEN starts_with(LOWER(event_type), 'persistent://public/') THEN replace(regexp_replace(event_type, '^persistent://public/', '', 'i'), '/', '.') ELSE event_type END;
+  -- prefix the message with the originating event type
   message := event_type || ' -- ' || NEW.failure_message;
   occurred := to_iso8601z(NEW.last_event_occurred_at);
   -- construct the payload
   payload := jsonb_build_object(
-    'type',      event_type,
+    'type',      'meemoo.sip.archived',  -- collapse all types into this one
     'timestamp', occurred,
     'data',      jsonb_build_object(
                    'correlation_id', correlation_id,
